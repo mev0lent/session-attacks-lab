@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome - Session Demo Lab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/dashboard.css') }}">
+</head>
+<body>
+    <h1>Welcome, {{ user }}!</h1>
+    <p>This is your insecure session demo dashboard. Try the links below to test various vulnerabilities.</p>
+    <ul>
+        <li><a href="/show_session">View your session ID</a></li>
+        <li><a href="/logout" class="warning">Logout</a></li>
+    </ul>
+
+    <p class="warning">⚠️ Warning: This demo app is intentionally insecure. Do not use in production.</p>
+</body>
+</html>
