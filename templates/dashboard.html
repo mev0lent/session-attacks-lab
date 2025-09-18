@@ -13,6 +13,23 @@
         <li><a href="/logout" class="warning">Logout</a></li>
     </ul>
 
+    <h2>Leave a Comment</h2>
+
+
+    <form method="POST" action="/">
+        <input type="text" name="comment" placeholder="Enter comment here" style="width: 300px;">
+        <button type="submit">Submit</button>
+    </form>
+
+    <h3>Previous Comments:</h3>
+    <ul>
+        {% for c in comments %}
+            <li>{{ c|safe }}</li> <!-- XSS vulnerability here -->
+        {% endfor %}
+    </ul>
+
+
+
     <p class="warning">⚠️ Warning: This demo app is intentionally insecure. Do not use in production.</p>
 </body>
 </html>

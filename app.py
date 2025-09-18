@@ -5,15 +5,29 @@ app = Flask(__name__)
 sessions = {}
 users = {"khan":"nooniensingh"}
 
-@app.route('/')
+comments = []  # In-memory comment store
+
+@app.route('/', methods=['GET', 'POST'])
 def index():
     session_id = request.cookies.get("session_id")
     user = sessions.get(session_id)
 
+    # saving a comment via GET
+    comment_from_url = request.args.get('comment')
+    if comment_from_url and comment_from_url not in comments:
+        comments.append(comment_from_url)
+
+    # saving a comment via POST
+    if request.method == 'POST' and user:
+        comment = request.form['comment']
+        comments.append(comment)  # ⚠️ Deliberate XSS vulnerability
+        return redirect('/')
+
     if user:
-        return render_template('dashboard.html', user=user, session_id=session_id)
+        return render_template('dashboard.html', user=user, session_id=session_id, comments=comments)
     else:
         return render_template('index.html')
+
     
 @app.before_request
 def force_hostname():
